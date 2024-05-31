@@ -80,5 +80,18 @@
     border-radius: 100%; 
     border: 3px solid aquamarine
 }
+.checkout-button {
+    height:6vh !important;
+    margin-top: 5vh !important;
+    border-radius: 35px;
+    padding: 1.5vh;
+    background-color: transparent;
+    color: white;
+    border: 3px solid white;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+}
+
+
 
 

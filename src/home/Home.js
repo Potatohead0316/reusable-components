@@ -1,6 +1,37 @@
+import About from './About';
+import Contacts from './Contacts';
+import Intro from './Intro';
+import Projects from './Projects';
+import Resume from './Resume';
 import './style.css';
+import React, {useState} from 'react'
 
 const Home = () => {
+
+    const [state, setState] = useState()
+    const handleNav = (nav) => {
+        setState(prevState => ({
+            ...prevState,
+            navType: nav
+        }))
+    }
+
+    const content = (type) => {
+        switch(type) {
+            case 1:
+                return <Intro/>;
+            case 2:
+                return <Projects/>;
+            case 3:
+                return <About/>;
+            case 4:
+                return <Resume/>;
+            default:
+                return <Contacts/>;
+        }
+    }
+    
+    console.log("state", state)
     return (
         <div className="form-container">
             <div className='header'>
@@ -9,23 +40,14 @@ const Home = () => {
                     <span className='last-name'>hagon</span>
                 </div>
                 <div className='navigation'>
-                    <div href="/">Home</div>
-                    <div href="/">Designs</div>
-                    <div href="/">About me</div>
-                    <div href="/">Resume</div>
-                    <div href="/">Contacts</div>
+                    <div onClick={()=>handleNav(1)}>Home</div>
+                    <div onClick={()=>handleNav(2)}>Projects</div>
+                    <div onClick={()=>handleNav(3)}>About me</div>
+                    <div onClick={()=>handleNav(4)}>Resume</div>
+                    <div onClick={()=>handleNav(5)}>Contacts</div>
                 </div>
             </div>
-            <div className='body-content'>
-                <div className='text-content'>
-                    <div className='line1'>Hi, I'm Angelo </div>
-                    <div className='line2'>A UI designer & React Developer </div>
-                    <div className='line3'>Crafting Beautiful and Functional Designs. Welcome to my Portfolio. </div>
-                </div>
-                <div className='image-content'>
-                    <img src="images/images.png" alt="sample"/>
-                </div>
-            </div>
+           {content(state?.navType)}
         </div>
     );
 };
