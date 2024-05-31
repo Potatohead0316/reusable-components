@@ -1,13 +1,3 @@
-.form-container {
-    width: 20vw;
-    border-radius: 0.75rem;
-    background-color: rgba(17, 24, 39, 1);
-    padding: 2rem;
-    color: rgba(243, 244, 246, 1);
-    position: absolute;
-    left: 38.5%;
-    top: 25%;
-}
 
 .title {
     text-align: center;
