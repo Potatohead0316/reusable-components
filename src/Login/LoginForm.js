@@ -35,7 +35,7 @@ const LoginForm = () => {
       <button className="sign" onClick={handleLogin}>Log in</button>
       <div className="social-message">
         <div className="line"></div>
-        <p className="message">Login with social accounts</p>
+        <p className="message">Connect</p>
         <div className="line"></div>
       </div>
       <div className="social-icons">
