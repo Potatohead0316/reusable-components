@@ -21,9 +21,9 @@ const Home = () => {
             case 1:
                 return <Intro/>;
             case 2:
-                return <Projects/>;
-            case 3:
                 return <About/>;
+            case 3:
+                return <Projects/>;
             case 4:
                 return <Resume/>;
             default:
@@ -41,8 +41,8 @@ const Home = () => {
                 </div>
                 <div className='navigation'>
                     <div onClick={()=>handleNav(1)}>Home</div>
-                    <div onClick={()=>handleNav(2)}>Projects</div>
-                    <div onClick={()=>handleNav(3)}>About me</div>
+                    <div onClick={()=>handleNav(2)}>About me</div>
+                    <div onClick={()=>handleNav(3)}>Projects</div>
                     <div onClick={()=>handleNav(4)}>Resume</div>
                     <div onClick={()=>handleNav(5)}>Contacts</div>
                 </div>

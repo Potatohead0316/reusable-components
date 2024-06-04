@@ -1,19 +1,19 @@
 .form-container {
-    width: 78vw;
-    height: 70vh;
+    width: 90%;
+    height: 100%;
     background-color: rgb(12, 20, 22);
-    padding: 4rem;
+    /* padding: 4rem; */
     color: rgba(243, 244, 246, 1);
     position: absolute;
-    left: 7.8vw;
-    top: 9vh;
-    box-shadow: 19px 20px 20px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 40px;
+    left: 5vw;
+    /* top: 9vh; */
+    /* box-shadow: 19px 20px 20px 20px rgba(0, 0, 0, 0.2); */
+    /* border-radius: 40px; */
 }
 .navigation{
     color: aliceblue;
     display: flex;
-    margin-right: 1vw;
+    /* margin-right: 8vw; */
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -27,7 +27,9 @@
 .header{
     display: flex;
     justify-content: space-between;
-    padding: 2vh;
+    padding: 2%;
+    width: 86%;
+    position: fixed;
 }
 .last-name {
     color: rgb(123, 182, 174);
@@ -70,6 +72,8 @@
 }
 .body-content{
     display: flex;
+    width: 90vw;
+    margin-top: 11vh;
 }
 .image-content {
     padding: 12vh !important
@@ -82,7 +86,7 @@
 }
 .checkout-button {
     height:5.5vh !important;
-    margin-top: 5vh !important;
+    margin-top: 7vh !important;
     border-radius: 35px;
     padding: 1.5vh;
     background-color: transparent;
@@ -105,6 +109,6 @@
     font-size: 20px;
 }
 
-
+  
 
 
