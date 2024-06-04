@@ -1,10 +1,6 @@
-import About from './About';
-import Contacts from './Contacts';
+import React, { useState } from 'react';
 import Intro from './Intro';
-import Projects from './Projects';
-import Resume from './Resume';
 import './style.css';
-import React, {useState} from 'react'
 
 const Home = () => {
 
@@ -16,20 +12,20 @@ const Home = () => {
         }))
     }
 
-    const content = (type) => {
-        switch(type) {
-            case 1:
-                return <Intro/>;
-            case 2:
-                return <About/>;
-            case 3:
-                return <Projects/>;
-            case 4:
-                return <Resume/>;
-            default:
-                return <Contacts/>;
-        }
-    }
+    // const content = (type) => {
+    //     switch(type) {
+    //         case 1:
+    //             return <Intro/>;
+    //         case 2:
+    //             return <About/>;
+    //         case 3:
+    //             return <Projects/>;
+    //         case 4:
+    //             return <Resume/>;
+    //         default:
+    //             return <Contacts/>;
+    //     }
+    // }
     
     console.log("state", state)
     return (
@@ -47,7 +43,7 @@ const Home = () => {
                     <div onClick={()=>handleNav(5)}>Contacts</div>
                 </div>
             </div>
-           {content(state?.navType)}
+           {<Intro/>}
         </div>
     );
 };

@@ -1,19 +1,12 @@
 .form-container {
-    width: 90%;
-    height: 100%;
+    width: 100%;
     background-color: rgb(12, 20, 22);
-    /* padding: 4rem; */
     color: rgba(243, 244, 246, 1);
     position: absolute;
-    left: 5vw;
-    /* top: 9vh; */
-    /* box-shadow: 19px 20px 20px 20px rgba(0, 0, 0, 0.2); */
-    /* border-radius: 40px; */
 }
 .navigation{
     color: aliceblue;
     display: flex;
-    /* margin-right: 8vw; */
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -27,9 +20,15 @@
 .header{
     display: flex;
     justify-content: space-between;
-    padding: 2%;
-    width: 86%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top:1%;
+    padding-bottom:1%;
+    width: 96%;
     position: fixed;
+    z-index: 1; 
+    border-bottom: 1px solid rgb(117, 121, 120);
+    background-color: rgb(12, 20, 22);
 }
 .last-name {
     color: rgb(123, 182, 174);
@@ -56,7 +55,7 @@
     text-decoration: none; /* Ensure no underline by default */
     color: inherit; /* Ensure it inherits the color from parent if specified */
     cursor: pointer; /* Change cursor to pointer to indicate it's interactive */
-    font-size: 22px;
+    font-size: 19px;
 }
 
 .navigation div:hover {
@@ -66,14 +65,16 @@
 }
 .text-content{
     width: 80vh;
-    margin-top: 18vh;
+    margin-top: 15vh;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding: 3vh;
 }
-.body-content{
+.intro-content{
     display: flex;
-    width: 90vw;
-    margin-top: 11vh;
+    width: 99vw;
+    margin-top: 7vh;
+    justify-content: space-around;
+
 }
 .image-content {
     padding: 12vh !important
@@ -107,6 +108,22 @@
     border: 3px solid white;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 20px;
+}
+
+.about-me {
+    display: flex;
+    padding: 5.5vw;
+}
+
+.about-me-text{
+    margin-left: 2vw;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+}
+
+.about-icons {
+    margin-top: 3vh;
+    margin-left: 2vw;
 }
 
   
