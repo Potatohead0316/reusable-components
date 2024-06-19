@@ -1,12 +1,38 @@
+import { useState, useEffect } from 'react';
 import './style.css';
 
 const Intro = () => {
+    const [displayedText, setDisplayedText] = useState('');
+    const phrases = ["UI/UX Designer", "Front-End Developer"];
+    const [phraseIndex, setPhraseIndex] = useState(0);
+    const [charIndex, setCharIndex] = useState(0);
+
+    useEffect(() => {
+        if (charIndex < phrases[phraseIndex]?.length) {
+            const timeout = setTimeout(() => {
+                setDisplayedText((prev) => prev + phrases[phraseIndex][charIndex]);
+                setCharIndex((prev) => prev + 1);
+            }, 100);
+            return () => clearTimeout(timeout);
+        } else {
+            const timeout = setTimeout(() => {
+                setCharIndex(0);
+                setDisplayedText('');
+                setPhraseIndex((prev) => (prev + 1) % phrases.length);
+            }, 1000);
+            return () => clearTimeout(timeout);
+        }
+    }, [charIndex, phraseIndex, phrases]);
+
+    const getCaret = () => {
+        return <span className="caret" style={{ color:'white', fontSize:'35px' }}>|</span>;
+    };
     return (
         <div>
             <div className='intro-content'>
                 <div className='text-content'>
                     <div className='line1'>Hi, I'm Angelo </div>
-                    <div className='line2'>Front-End Developer </div>
+                    <div className='line2'>{displayedText}{getCaret()}</div>
                     <div className='line3'>Crafting Beautiful and Functional Designs. Welcome to my Portfolio. </div>
                     <button className='checkout-button'>CONTACT ME</button>
                     <button className='contact-button'>DOWNLOAD CV</button>

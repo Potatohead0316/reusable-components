@@ -42,6 +42,7 @@
     font-size: 3vh;
     color: aquamarine;
     margin-top: 1vh;
+    height: 4vh
 }
 .line3{
     font-size: 2vh;
@@ -125,6 +126,23 @@
     margin-top: 3vh;
     margin-left: 2vw;
 }
+
+.caret {
+    display: inline-block;
+    width: 10px;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to {
+        color: transparent;
+    }
+    50% {
+        color: rgb(250, 248, 248);
+    }
+}
+
+
 
   
 
