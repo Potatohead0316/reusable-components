@@ -66,14 +66,14 @@
 }
 .text-content{
     width: 80vh;
-    margin-top: 15vh;
+    margin-top: 21vh;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding: 3vh;
 }
 .intro-content{
     display: flex;
     width: 99vw;
-    margin-top: 7vh;
+    margin-top: 10vh;
     justify-content: space-around;
 
 }
@@ -141,6 +141,51 @@
         color: rgb(250, 248, 248);
     }
 }
+
+.projects-container {
+    padding: 4vw;
+}
+
+.projects-container img{
+    width: 28.3vw !important;
+    margin-left: 1.5vw;
+    margin-top: 1.5vw;
+    border:1px solid aquamarine
+}
+
+.projects-custom-button button {
+  background-color: white;
+  color: black;
+  border-radius: 10em;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 1em 1em;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid black;
+  box-shadow: 0 0 0 0 black;
+  width: 7vw;
+}
+
+.projects-custom-button button:hover {
+  transform: translateY(-4px) translateX(-2px);
+  box-shadow: 2px 5px 0 0 rgb(29, 172, 65);
+};
+
+.projects-custom-button button:active {
+  transform: translateY(2px) translateX(1px);
+  box-shadow: 0 0 0 0 black;
+};
+
+.property-banner {
+    height: 12vh;
+    width: 85vw;
+    border: 1px solid white;
+    margin-left: 7vw;
+    display: flex;
+    justify-content: space-between;
+}
+
 
 
 

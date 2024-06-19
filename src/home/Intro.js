@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './style.css';
 
 const Intro = () => {
@@ -41,6 +41,17 @@ const Intro = () => {
                     <img src="images/images.png" alt="sample" />
                 </div>
             </div>
+            <br/><br/><br/>
+            <div className='property-banner' style = {{ height:'12vh', width:'85vw', border: '1px solid white', marginLeft:'7vw', display:'flex', justifyContent:'space-between' }}>
+                <center style={{ height:'100%', width:'10vw', padding:'.5vw' }}>
+                    <div style={{ fontSize:'50px' }}>6</div>
+                    <div style={{ fontSize:'20px' }}>Projects</div>
+                </center>
+                <center style={{ height:'100%', width:'10vw', padding:'.5vw' }}>
+                    <div style={{ fontSize:'50px' }}>1+</div>
+                    <div style={{ fontSize:'20px' }}>Experience</div>
+                </center>
+            </div>
             <div className='about-me'>
                 <div className='webdev-container'>
                     <img src="images/webdev.jpg" alt="sample" />
@@ -58,6 +69,20 @@ const Intro = () => {
                         <img src="images/javascript.png" alt="sample" />
                         <img src="images/azure.png" alt="sample" />
                     </div>
+                </div>
+            </div>
+            <div className='my-projects'>
+                <div className='projects-custom-button' style={{ display:'flex', justifyContent:'center', marginBottom:'-2vw' }}>
+                    <button>All</button> &nbsp;
+                    <button>Private</button>
+                </div>
+                <div className='projects-container' >
+                    <img src="images/web.jpg" alt="sample" />
+                    <img src="images/web.jpg" alt="sample" />
+                    <img src="images/web.jpg" alt="sample" />
+                    <img src="images/web.jpg" alt="sample" />
+                    <img src="images/web.jpg" alt="sample" />
+                    <img src="images/web.jpg" alt="sample" />
                 </div>
             </div>
         </div>
