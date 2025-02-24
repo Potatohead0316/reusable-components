@@ -1,23 +1,40 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import './style.css';
+import { login } from '../../services/authService';
 
 const LoginForm = () => {
-  const [state, setState] = useState({});
+  const [state, setState] = useState({ username: '', password: '', role: 'user' })
+  const [isAdmin, setIsAdmin] = useState(false)
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log("Login successful");
-    navigate('/home');
+  const handleLogin = async () => {
+    try {
+      const result = await login(state);  // Use the login service
+      console.log('result', result)
+
+      if (!result.success) {
+        return alert(result.message);
+      }
+
+      localStorage.setItem('token', result.token);
+      return navigate('/Home');
+
+    } catch (err) {
+      console.log(err)
+    }
   };
 
-  console.log("state", state);
+  const handleAdmin = () => {
+    setIsAdmin(true)
+    setState({ ...state, role: 'admin' })
+  }
 
   return (
     <div className="form-container">
       <div className='main-container'>
         <div className='login-container'>
-          <p className="title">Login</p>
+          <p className="title">{isAdmin ? 'Admin login' : 'Login'}</p>
           <div className="input-group">
             <label htmlFor="username">Username</label>
             <input
@@ -35,6 +52,7 @@ const LoginForm = () => {
             <div className="forgot"></div>
           </div>
           <button className="sign" onClick={handleLogin}>Log in</button>
+          <div className='admin' onClick={handleAdmin}>Log in as administrator</div>
           <div className="social-message">
             <div className="line"></div>
             <p className="message">Connect</p>

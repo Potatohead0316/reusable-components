@@ -4,6 +4,7 @@
     font-size: 1.5rem;
     line-height: 2rem;
     font-weight: 700;
+    color: white;
 }
 
 .form {
@@ -27,7 +28,7 @@
     width: 25%;
     padding: 30px;
     border-radius: 15px;
-    height: 390px;
+    height: 410px;
     margin-top: 10%;
 }
 
@@ -136,4 +137,10 @@
 
 .text-error {
     color: yellow !important;
+}
+
+.admin {
+    color: white;
+    text-decoration: underline;
+    margin-top: 10px;
 }
