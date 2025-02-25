@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 import { login } from '../../services/authService';
 
@@ -10,14 +10,14 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     try {
-      const result = await login(state);  // Use the login service
+      const result = await login(state); 
       console.log('result', result)
 
       if (!result.success) {
         return alert(result.message);
       }
 
-      localStorage.setItem('token', result.token);
+      localStorage.setItem('userId', result.data._id);
       return navigate('/Home');
 
     } catch (err) {

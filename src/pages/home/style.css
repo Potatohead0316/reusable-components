@@ -2,6 +2,43 @@
     width: 100%;
 }
 
-.header {
+.home-container {
     color: aliceblue;
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header {
+    border: 1px solid rgb(70, 69, 69);
+    height: 20%;
+}
+
+.body {
+    border: 1px solid rgb(70, 69, 69);
+    height: inherit;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-nav {
+    width: 20%;
+    border: 1px solid rgb(70, 69, 69);
+}
+
+.main-content {
+    border: 1px solid rgb(70, 69, 69);
+    width: 60%;
+}
+
+.right-nav {
+    width: 20%;
+    border: 1px solid rgb(70, 69, 69);
+}
+
+.footer {
+    border: 1px solid rgb(70, 69, 69);
+    height: 20%;
 }
