@@ -1,44 +1,14 @@
-.form-container {
-    width: 100%;
-}
-
 .home-container {
-    color: aliceblue;
     height: 100%;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 
-.header {
-    border: 1px solid rgb(70, 69, 69);
-    height: 20%;
-}
-
-.body {
-    border: 1px solid rgb(70, 69, 69);
-    height: inherit;
-    display: flex;
-    justify-content: space-between;
-}
-
-.left-nav {
-    width: 20%;
-    border: 1px solid rgb(70, 69, 69);
-}
-
-.main-content {
-    border: 1px solid rgb(70, 69, 69);
-    width: 60%;
-}
-
-.right-nav {
-    width: 20%;
-    border: 1px solid rgb(70, 69, 69);
-}
-
-.footer {
-    border: 1px solid rgb(70, 69, 69);
-    height: 20%;
+.content-container {
+    border: 1px solid rgb(61, 139, 139);
+    height: 800px;
+    width: 1600px;
 }

@@ -11,6 +11,10 @@
     margin-top: 1.5rem;
 }
 
+.form-container{
+    width: 100%;
+}
+
 .input-group {
     margin-top: 0.25rem;
     font-size: 0.875rem;

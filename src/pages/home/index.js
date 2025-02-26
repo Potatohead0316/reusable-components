@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import './style.css'
 import { userDetails } from '../../services/userDetailsService'
-import LeftNav from '../../components/footer'
 
 const Home = () => {
     const storedUserId = localStorage.getItem('userId')
@@ -28,15 +27,7 @@ const Home = () => {
 
     return (
         <div className='home-container'>
-            <div className='header'></div>
-            <div className='body'>
-                <div className='left-nav'>
-                    <LeftNav/>
-                </div>
-                <div className='main-content'></div>
-                <div className='right-nav'></div>
-            </div>
-            <div className='footer'></div>
+            <div className='content-container'></div>
         </div>
     )
 }
