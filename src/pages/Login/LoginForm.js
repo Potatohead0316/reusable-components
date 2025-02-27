@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import { login } from '../../services/authService';
+import { setUser } from '../../redux/features/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LoginForm = () => {
-  const [state, setState] = useState({ username: '', password: '', role: 'user' })
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [state, setState] = useState({ username: '', password: '', role: 'user' });
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/Home');
+    }
+  }, [user, navigate]);
 
   const handleLogin = async () => {
     try {
-      const result = await login(state); 
-      console.log('result', result)
+      const result = await login(state);
 
       if (!result.success) {
         return alert(result.message);
       }
 
-      localStorage.setItem('userId', result.data._id);
-      return navigate('/Home');
-
+      dispatch(setUser(result.data));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -29,6 +36,8 @@ const LoginForm = () => {
     setIsAdmin(true)
     setState({ ...state, role: 'admin' })
   }
+
+  console.log('user', user)
 
   return (
     <div className="form-container">
