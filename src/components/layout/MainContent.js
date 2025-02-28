@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import Book from "../content/book-management";
-import User from "../content/user-management";
-import Order from "../content/order-management";
+import Book from "../content/bookManagement";
+import User from "../content/userManagement";
+import Order from "../content/orderManagement";
 import Settings from "../content/settings";
 import Footer from "./Footer";
 import '../../components/layout/styles.css'

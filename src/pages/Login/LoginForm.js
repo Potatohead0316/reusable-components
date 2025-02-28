@@ -22,6 +22,8 @@ const LoginForm = () => {
     try {
       const result = await login(state);
 
+      console.log(result)
+
       if (!result.success) {
         return alert(result.message);
       }

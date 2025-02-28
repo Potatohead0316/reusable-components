@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './features/userSlice'
-import navReducer from './features/navSlice'; // Import the new reducer
+import navReducer from './features/navSlice';
 
 const store = configureStore({
   reducer: {

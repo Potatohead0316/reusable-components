@@ -4,3 +4,7 @@
     height: 160px;
     background-color: white;
 }
+
+.center-container {
+    padding: 30px;
+}
