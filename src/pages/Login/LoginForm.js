@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import { login } from '../../services/authService';
-import { setUser } from '../../redux/features/user/userSlice';
+import { setUser } from '../../redux/features/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const LoginForm = () => {

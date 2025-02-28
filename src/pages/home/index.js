@@ -1,4 +1,4 @@
-import { setLoading, setUser } from '../../redux/features/user/userSlice'
+import { setLoading, setUser } from '../../redux/features/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useRef } from 'react'
 import { userDetails } from '../../services/userDetailsService'
