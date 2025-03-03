@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react'
 import BorderedTable from '../common/table'
 import Modal from '../common/modal'
 import '../content/styles.css'
-import { useSelector } from 'react-redux'
-import { listBook } from '../../services/bookService'
+import { addBook, listBook } from '../../services/bookService'
 
 const Book = () => {
-  const books = useSelector((state) => state.books)
   const initialState = {
     title: '',
     author: '',
@@ -17,30 +15,35 @@ const Book = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [state, setState] = useState(initialState)
   const columns = ['Title', 'Author', 'Year', 'Genre', 'Image']
+  const [bookData, setBookData] = useState([])
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const data = await listBook()
 
-        console.log('data', data)
+        if (data?.success && data?.data) {
+          setBookData(data.data)
+        }
       } catch (error) {
         console.error('Error fetching books:', error)
       }
     }
 
-    fetchBooks() // Call the function when component mounts
+    fetchBooks()
   }, [])
 
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (!state.title || !state.author || !state.year || !state.genre || !state.image) {
       alert('All fields are required.')
       return
     }
+
+    const createBook = await addBook(state)
 
     // setBooks([...books, state])
     setState(initialState)
@@ -53,7 +56,7 @@ const Book = () => {
       <div className='modal-button-wrapper'>
         <div className='open-button' onClick={() => setIsOpen(true)}>Add</div>
       </div>
-      <BorderedTable columns={columns} data={books} />
+      <BorderedTable columns={columns} data={bookData} />
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <h3>Add a New Book</h3>

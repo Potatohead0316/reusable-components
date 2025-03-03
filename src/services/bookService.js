@@ -23,7 +23,7 @@ export const listBook = async () => {
   try {
     const response = await fetch(`${API_URL}/list-books`)
     const data = await response.json()
-    return data.data // Assuming successResponse sends { message, data }
+    return data // Assuming successResponse sends { message, data }
   } catch (error) {
     console.error('Error fetching books:', error)
     return []
