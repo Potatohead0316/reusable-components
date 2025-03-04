@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import BorderedTable from '../common/table'
 import Modal from '../common/modal'
 import '../content/styles.css'
-import { addBook, listBook } from '../../services/bookService'
+import { addBook, deleteBook, findBook, listBook, updateBook } from '../../services/bookService'
+import LoadingOverlay from '../common/loadingOverlay'
 
 const Book = () => {
   const initialState = {
@@ -12,54 +13,95 @@ const Book = () => {
     genre: '',
     image: '',
   }
-  const [isOpen, setIsOpen] = useState(false)
+  const columns = ['Title', 'Author', 'Year', 'Genre', 'Image', 'Actions']
   const [state, setState] = useState(initialState)
-  const columns = ['Title', 'Author', 'Year', 'Genre', 'Image']
+  const [isOpen, setIsOpen] = useState(false)
   const [bookData, setBookData] = useState([])
+  const [isReload, setIsReload] = useState(false)
+  const [bookId, setBookId] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [hasFetched, setHasFetched] = useState(false)
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
+        setLoading(true)
         const data = await listBook()
 
         if (data?.success && data?.data) {
           setBookData(data.data)
+        } else {
+          setBookData([])
         }
+        setHasFetched(true)
       } catch (error) {
         console.error('Error fetching books:', error)
       }
+      setLoading(false)
+      setIsReload(false)
     }
 
-    fetchBooks()
-  }, [])
+    if ((isReload || !hasFetched)) {
+      fetchBooks()
+    }
+  }, [isReload, hasFetched])
 
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async() => {
+  const handleEdit = async (id) => {
+    setIsOpen(true)
+    setBookId(id)
+    const find = await findBook(id)
+    setState(find.data)
+  }
+
+  const handleDelete = async (id) => {
+    const removeBook = await deleteBook(id)
+
+    if (!removeBook?.success) {
+      alert(removeBook?.message)
+    }
+
+    setIsReload(true)
+  }
+
+  const handleSubmit = async () => {
     if (!state.title || !state.author || !state.year || !state.genre || !state.image) {
       alert('All fields are required.')
       return
     }
 
-    const createBook = await addBook(state)
+    let result;
 
-    // setBooks([...books, state])
+    if (bookId) {
+      result = await updateBook(bookId, state)
+    } else {
+      result = await addBook(state)
+    }
+
+    if (!result.success) {
+      alert(result?.message)
+    }
+
+    setIsReload(true)
     setState(initialState)
     setIsOpen(false)
+    setBookId(null)
   }
 
   return (
     <div>
+      {loading && <LoadingOverlay />}
       <div className="page-label">📚 Book Management</div>
       <div className='modal-button-wrapper'>
         <div className='open-button' onClick={() => setIsOpen(true)}>Add</div>
       </div>
-      <BorderedTable columns={columns} data={bookData} />
+      <BorderedTable columns={columns} data={bookData} onEdit={handleEdit} onDelete={handleDelete} />
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <h3>Add a New Book</h3>
+        <h3>{bookId ? 'Update Book' : 'Add New Book'}</h3>
         <div className='add-form'>
           <input type="text" name="title" placeholder="Title" value={state.title} onChange={handleChange} required />
           <input type="text" name="author" placeholder="Author" value={state.author} onChange={handleChange} required />

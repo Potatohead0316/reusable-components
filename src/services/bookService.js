@@ -29,3 +29,48 @@ export const listBook = async () => {
     return []
   }
 }
+
+export const deleteBook = async (id) => {
+  try {
+    const response = await fetch(`${API_URL}/delete-book/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Error removing book:', error)
+    return null
+  }
+}
+
+export const updateBook = async (id, updatedData) => {
+  try {
+    const response = await fetch(`${API_URL}/update-book/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    })
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Error updating book:', error)
+    return null
+  }
+}
+
+export const findBook = async (id) => {
+  try {
+    const response = await fetch(`${API_URL}/find-book/${id}`)
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Error finding book:', error)
+    return null
+  }
+}
+
