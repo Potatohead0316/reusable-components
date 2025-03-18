@@ -39,8 +39,6 @@ const LoginForm = () => {
     setState({ ...state, role: 'admin' })
   }
 
-  console.log('user', user)
-
   return (
     <div className="form-container">
       <div className='main-container'>

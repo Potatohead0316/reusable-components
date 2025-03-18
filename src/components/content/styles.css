@@ -1,12 +1,31 @@
 .open-button {
     background-color:gold;
     margin: 0px 0px 10px 0px;
-    padding: 7px 15px;
+    padding: 8px 15px;
+    cursor: pointer;
 }
 
 .modal-button-wrapper {
+    height: 50px;
     display: flex;
     justify-content: flex-end;
+    gap: 15px;
+}
+
+.search-field {
+  display: flex;
+}
+
+.search-input {
+  width: 350px;
+  height: 37px;
+  border: 1px solid #b6afaf;
+}
+
+.search-button {
+  background-color: #0d93d985;
+  padding: 10px;
+  height: fit-content;
 }
 
 .add-form {

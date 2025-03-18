@@ -28,8 +28,6 @@ const Home = () => {
         fetchUserDetails()
     }, [user, dispatch])
 
-    console.log('activeNavItem', activeNavItem)
-
     return (
         <div className='home-container'>
             <Header />

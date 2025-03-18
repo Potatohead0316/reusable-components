@@ -1,7 +1,6 @@
 import '../common/styles.css'
 
 const BorderedTable = ({ columns = [], data = [], onEdit, onDelete }) => {
-  console.log('data', data)
   return (
     <div className="table-container">
       <table className="bordered-table">

@@ -4,114 +4,133 @@ import Modal from '../common/modal'
 import '../content/styles.css'
 import { addBook, deleteBook, findBook, listBook, updateBook } from '../../services/bookService'
 import LoadingOverlay from '../common/loadingOverlay'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 const Book = () => {
   const initialState = {
-    title: '',
-    author: '',
-    year: '',
-    genre: '',
-    image: '',
+    book: {},
+    isOpen: false,
+    bookData: [],
+    isReload: false,
+    loading: true,
+    hasFetched: false,
+    bookId: null,
+    tableHeader: ['Title', 'Author', 'Year', 'Genre', 'Image']
   }
-  const columns = ['Title', 'Author', 'Year', 'Genre', 'Image', 'Actions']
+
   const [state, setState] = useState(initialState)
-  const [isOpen, setIsOpen] = useState(false)
-  const [bookData, setBookData] = useState([])
-  const [isReload, setIsReload] = useState(false)
-  const [bookId, setBookId] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [hasFetched, setHasFetched] = useState(false)
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        setLoading(true)
+        setState((prev) => ({ ...prev, loading: true }))
         const data = await listBook()
 
-        if (data?.success && data?.data) {
-          setBookData(data.data)
-        } else {
-          setBookData([])
-        }
-        setHasFetched(true)
+        setState((prev) => ({
+          ...prev,
+          bookData: data?.success && data?.data ? data.data : [],
+          hasFetched: true,
+          loading: false,
+          isReload: false,
+        }))
       } catch (error) {
         console.error('Error fetching books:', error)
+        setState((prev) => ({ ...prev, loading: false }))
       }
-      setLoading(false)
-      setIsReload(false)
     }
 
-    if ((isReload || !hasFetched)) {
+    if (state.isReload || !state.hasFetched) {
       fetchBooks()
     }
-  }, [isReload, hasFetched])
+  }, [state.isReload, state.hasFetched])
 
   const handleChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value })
+    setState((prev) => ({
+      ...prev,
+      book: { ...prev.book, [e.target.name]: e.target.value },
+    }))
   }
 
   const handleEdit = async (id) => {
-    setIsOpen(true)
-    setBookId(id)
-    const find = await findBook(id)
-    setState(find.data)
+    setState((prev) => ({ ...prev, isOpen: true}))
+    if (id) {
+      const find = await findBook(id)
+      setState((prev) => ({ ...prev, book: find.data, bookId: id }))
+    } else {
+      setState((prev) => ({ ...prev, book: {}, bookId: null }))
+    }
   }
 
   const handleDelete = async (id) => {
+    setState((prev) => ({ ...prev, loading: true }))
     const removeBook = await deleteBook(id)
-
     if (!removeBook?.success) {
       alert(removeBook?.message)
     }
+    setState((prev) => ({ ...prev, isReload: true }))
+  }
 
-    setIsReload(true)
+  const handleClose = () => {
+    setState((prev) => ({ ...prev, isOpen: false, bookId: null }))
   }
 
   const handleSubmit = async () => {
-    if (!state.title || !state.author || !state.year || !state.genre || !state.image) {
+    if (!state.book.title || !state.book.author || !state.book.year || !state.book.genre || !state.book.image) {
       alert('All fields are required.')
       return
     }
 
-    let result;
-
-    if (bookId) {
-      result = await updateBook(bookId, state)
+    let result
+    if (state.bookId) {
+      result = await updateBook(state.bookId, state.book)
     } else {
-      result = await addBook(state)
+      result = await addBook(state.book)
     }
 
     if (!result.success) {
       alert(result?.message)
     }
 
-    setIsReload(true)
-    setState(initialState)
-    setIsOpen(false)
-    setBookId(null)
+    setState((prev) => ({
+      ...prev,
+      isReload: true,
+      book: initialState.book,
+      isOpen: false,
+      bookId: null,
+    }))
   }
+
+  const handleSearch = () => {
+
+  }
+
+  console.log('state', state)
 
   return (
     <div>
-      {loading && <LoadingOverlay />}
+      {state.loading && <LoadingOverlay />}
       <div className="page-label">📚 Book Management</div>
       <div className='modal-button-wrapper'>
-        <div className='open-button' onClick={() => setIsOpen(true)}>Add</div>
+        <div className='search-field'>
+          <input className='search-input' type='text' />
+          <div className='search-button' onClick={() => handleSearch()}><i class="fa fa-search" aria-hidden="true"></i></div>
+        </div>
+        <div className='open-button' onClick={() => handleEdit()}> Add Book</div>
       </div>
-      <BorderedTable columns={columns} data={bookData} onEdit={handleEdit} onDelete={handleDelete} />
+      <BorderedTable columns={state.tableHeader} data={state.bookData} onEdit={handleEdit} onDelete={handleDelete} />
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <h3>{bookId ? 'Update Book' : 'Add New Book'}</h3>
+      <Modal isOpen={state.isOpen} onClose={handleClose}>
+        <h3>{state.bookId ? 'Update Book' : 'Add New Book'}</h3>
         <div className='add-form'>
-          <input type="text" name="title" placeholder="Title" value={state.title} onChange={handleChange} required />
-          <input type="text" name="author" placeholder="Author" value={state.author} onChange={handleChange} required />
-          <input type="text" name="year" placeholder="Year" value={state.year} onChange={handleChange} required />
-          <input type="text" name="genre" placeholder="Genre" value={state.genre} onChange={handleChange} required />
-          <input type="text" name="image" placeholder="Image URL" value={state.image} onChange={handleChange} required />
+          <input type="text" name="title" placeholder="Title" value={state?.book?.title || ''} onChange={handleChange} required />
+          <input type="text" name="author" placeholder="Author" value={state?.book?.author || ''} onChange={handleChange} required />
+          <input type="number" name="year" placeholder="Year" value={state?.book?.year || ''} onChange={handleChange} required />
+          <input type="text" name="genre" placeholder="Genre" value={state?.book?.genre || ''} onChange={handleChange} required />
+          <input type="text" name="image" placeholder="Image URL" value={state?.book?.image || ''} onChange={handleChange} required />
         </div>
         <div className="button-group">
-          <div className="cancel-button" onClick={() => setIsOpen(false)}>Cancel</div>
-          <div className="save-button" onClick={handleSubmit}>Save</div>
+          <div className="cancel-button" onClick={handleClose}>Cancel</div>
+          <div className="save-button" onClick={handleSubmit}>{state?.bookId ? 'Update' : 'Save'}</div>
         </div>
       </Modal>
     </div>
