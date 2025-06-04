@@ -1,12 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit'
-import userReducer from './features/userSlice'
-import navReducer from './features/navSlice';
+import { configureStore } from '@reduxjs/toolkit';
+import { apiSlice } from './api/apiSlice';
+import navReducer from './slices/navSlice';
+import userReducer from './slices/userSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    user: userReducer,
     nav: navReducer,
+    user: userReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
-})
-
-export default store
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
+});

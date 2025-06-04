@@ -1,4 +1,4 @@
-import { setLoading, setUser } from '../../redux/features/userSlice'
+import { setLoading, setUser } from '../../redux/slices/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useRef } from 'react'
 import { userDetails } from '../../services/userDetailsService'
@@ -12,6 +12,8 @@ const Home = () => {
     const activeNavItem = useSelector((state) => state.nav.activeNavItem);
     const dispatch = useDispatch()
     const hasFetched = useRef(false)
+
+    console.log('user', user)
 
     useEffect(() => {
         const fetchUserDetails = async () => {

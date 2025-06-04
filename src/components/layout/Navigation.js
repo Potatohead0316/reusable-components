@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setNavItem } from "../../redux/features/navSlice";
+import { setNavItem } from "../../redux/slices/navSlice";
 
 const Navigation = () => {
     const navItems = ['Book Management', 'User Management', 'Order Management', 'Settings'];

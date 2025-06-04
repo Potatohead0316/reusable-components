@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { logout } from '../../redux/features/userSlice';
+import { logout } from '../../redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Header = () => {

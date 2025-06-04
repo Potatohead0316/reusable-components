@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
-import { login } from '../../services/authService';
-import { setUser } from '../../redux/features/userSlice';
+import { setUser } from '../../redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLoginUserMutation } from '../../redux/api/userService';
+import toast, { Toaster } from 'react-hot-toast';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const [loginUser, { data, isLoading, error }] = useLoginUserMutation();
   const [state, setState] = useState({ username: '', password: '', role: 'user' });
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -20,17 +22,10 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     try {
-      const result = await login(state);
-
-      console.log(result)
-
-      if (!result.success) {
-        return alert(result.message);
-      }
-
-      dispatch(setUser(result.data));
-    } catch (err) {
-      console.log(err);
+      const result = await loginUser(state).unwrap(); 
+      dispatch(setUser(result?.data));
+    } catch (error) {
+      toast.error(error?.message || error?.data?.message || JSON.stringify(error));
     }
   };
 
@@ -86,6 +81,7 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 };

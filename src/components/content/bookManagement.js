@@ -2,47 +2,47 @@ import { useEffect, useState } from 'react'
 import BorderedTable from '../common/table'
 import Modal from '../common/modal'
 import '../content/styles.css'
-import { addBook, deleteBook, findBook, listBook, updateBook } from '../../services/bookService'
+import { deleteBook } from '../../services/bookService'
 import LoadingOverlay from '../common/loadingOverlay'
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import { useAddBookMutation, useBookListQuery, useFindBookQuery, useUpdateBookMutation } from '../../redux/api/bookService'
+import { useSelector } from 'react-redux'
 
 const Book = () => {
   const initialState = {
     book: {},
     isOpen: false,
     bookData: [],
-    isReload: false,
     loading: true,
-    hasFetched: false,
     bookId: null,
     tableHeader: ['Title', 'Author', 'Year', 'Genre', 'Image']
   }
 
   const [state, setState] = useState(initialState)
 
+  const { data, error, isLoading, isSuccess } = useBookListQuery();
+  const [addBook, { addBookData, addBookIsLoading, addBookError }] = useAddBookMutation()
+  const [updateBook, { updateBookData, updateBookIsLoading, updateBookError }] = useUpdateBookMutation()
+  const { findBook, findBookError, findBookIsLoading, findBookIsSuccess } = useFindBookQuery(state.bookId);
+
+  console.log('data', data)
+  console.log('state', state)
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        setState((prev) => ({ ...prev, loading: true }))
-        const data = await listBook()
-
         setState((prev) => ({
           ...prev,
           bookData: data?.success && data?.data ? data.data : [],
-          hasFetched: true,
           loading: false,
-          isReload: false,
         }))
       } catch (error) {
         console.error('Error fetching books:', error)
         setState((prev) => ({ ...prev, loading: false }))
       }
     }
-
-    if (state.isReload || !state.hasFetched) {
-      fetchBooks()
-    }
-  }, [state.isReload, state.hasFetched])
+    fetchBooks()
+  }, [data])
 
   const handleChange = (e) => {
     setState((prev) => ({
@@ -67,7 +67,6 @@ const Book = () => {
     if (!removeBook?.success) {
       alert(removeBook?.message)
     }
-    setState((prev) => ({ ...prev, isReload: true }))
   }
 
   const handleClose = () => {
@@ -82,10 +81,12 @@ const Book = () => {
 
     let result
     if (state.bookId) {
-      result = await updateBook(state.bookId, state.book)
+      result = await updateBook(state.bookId, state.book).unwrap
     } else {
-      result = await addBook(state.book)
+      result = await addBook(state.book).unwrap()
     }
+
+    console.log('result', result)
 
     if (!result.success) {
       alert(result?.message)
@@ -93,7 +94,6 @@ const Book = () => {
 
     setState((prev) => ({
       ...prev,
-      isReload: true,
       book: initialState.book,
       isOpen: false,
       bookId: null,
@@ -103,8 +103,6 @@ const Book = () => {
   const handleSearch = () => {
 
   }
-
-  console.log('state', state)
 
   return (
     <div>
