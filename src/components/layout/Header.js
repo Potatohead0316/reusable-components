@@ -28,7 +28,7 @@ const Header = () => {
 
     return (
         <div className="header">
-            <div>Logo</div>
+            <div style={{ color:'white' }}>Logo</div>
             <div className="user-container" ref={dropdownRef}>
                 <div className="user" onClick={() => setIsOpen(!isOpen)}>
                     {userInitial}

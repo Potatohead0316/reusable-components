@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { userDetails } from '../../services/userDetailsService'
 import './style.css'
 import Header from '../../components/layout/Header'
+import MainContent from '../../components/layout/MainContent'
 
 const Home = () => {
     const { user } = useSelector((state) => state.user)
@@ -28,12 +29,18 @@ const Home = () => {
     }, [user, dispatch])
 
     return (
-        <div className='home-container'>
+        <div
+            className="home-container"
+            style={{
+                backgroundImage: 'url("/images/trello-bg-image.jpg")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                minHeight: '100vh',
+            }}
+        >
             <Header />
-            <div className='content-container'>
-                {/* <Navigation /> */}
-                {/* <MainContent/> */}
-            </div>
+            <MainContent />
         </div>
     )
 }
