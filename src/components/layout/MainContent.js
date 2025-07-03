@@ -107,7 +107,7 @@ const MainContent = () => {
                                 )
                             })}
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <AddIcon style={{ fontSize: '30px', fontWeight:'500' }} />
+                                <AddIcon style={{ fontSize: '30px', fontWeight: '500' }} />
                             </div>
                         </div>
                     )
