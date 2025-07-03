@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './styles.css'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Menu, MenuItem, IconButton } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add';
 
 const MainContent = () => {
 
@@ -105,6 +106,9 @@ const MainContent = () => {
                                     </div>
                                 )
                             })}
+                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <AddIcon style={{ fontSize: '30px', fontWeight:'500' }} />
+                            </div>
                         </div>
                     )
                 })}
