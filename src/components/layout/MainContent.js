@@ -37,7 +37,6 @@ const MainContent = () => {
 
     const handleProceed = (type) => {
         const { selectedTab, selectedItem } = state;
-        console.log({ tab: selectedTab, item: selectedItem, type });
 
         const updatedSourceList = state.data[selectedTab].filter(
             item => item.value !== selectedItem.value
@@ -69,9 +68,6 @@ const MainContent = () => {
     }
 
     const handleMenuOpen = (event, tab, item) => {
-        console.log(event.currentTarget)
-        console.log(tab)
-        console.log(item)
         setState(prev => ({
             ...prev,
             activeItem: event.currentTarget,
@@ -81,19 +77,14 @@ const MainContent = () => {
         setIsDialogOpen(true)
     }
 
-    console.log('state', state)
-    console.log('isDialogOpen', isDialogOpen)
-
     return (
         <div style={{ padding: '25px' }}>
             <div className='trello-wrapper'>
                 {Object.entries(state.data).map(item => {
-                    // console.log('item', item)
                     return (
                         <div className='trello-column' key={item}>
                             <div className='trello-tab'>{item[0]}</div>
                             {item[1].map(subItem => {
-                                console.log('subItem', subItem)
                                 return (
                                     <div className='trello-item' >
                                         <div className='trello-item-head'>

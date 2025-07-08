@@ -1,5 +1,5 @@
-const Modal = ({ isOpen, onClose, children }) => {
-  if (!isOpen) return null
+const CustomModal = ({ isOpen, onClose, children }) => {
+  if (!isOpen) return null;
 
   return (
     <div className="modal-overlay">
@@ -10,7 +10,7 @@ const Modal = ({ isOpen, onClose, children }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Modal
+export default CustomModal

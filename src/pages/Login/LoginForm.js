@@ -5,6 +5,7 @@ import { setUser } from '../../redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginUserMutation } from '../../redux/api/userService';
 import toast, { Toaster } from 'react-hot-toast';
+import { authApi } from '../../redux/api/userService';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -22,8 +23,22 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     try {
-      const result = await loginUser(state).unwrap(); 
-      dispatch(setUser(result?.data));
+      const result = await loginUser(state).unwrap();
+      const { token, userWithoutPassword } = result.data;
+
+      localStorage.setItem('token', token);
+
+      const userResult = await dispatch(
+        authApi.endpoints.getUserById.initiate(userWithoutPassword._id)
+      );
+
+      if (userResult.error) {
+        throw userResult.error;
+      }
+
+      dispatch(setUser(userResult.data.data));
+
+      toast.success("Login successful!");
     } catch (error) {
       toast.error(error?.message || error?.data?.message || JSON.stringify(error));
     }
