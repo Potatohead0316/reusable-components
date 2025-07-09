@@ -1,33 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './styles.css'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Menu, MenuItem, IconButton } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
+import { useGetListQuery, useMoveTaskMutation } from '../../redux/api/taskService';
 
 const MainContent = () => {
-
+    const { data, error, isLoading, isFetching, isSuccess } = useGetListQuery();
+    const [moveTask, { isMoveLoading, isError }] = useMoveTaskMutation();
     const initialState = {
-        data: {
-            'TO DO': [
-                { title: 'TD1', value: 'td1', description: 'To do 1 lorem ipsum dolor' },
-                { title: 'TD2', value: 'td2', description: 'To do 2' },
-                { title: 'TD3', value: 'td3', description: 'To do 3' },
-            ],
-            'IN PROGRESS': [
-                { title: 'IP1', value: 'ip1', description: 'In progress 1' },
-                { title: 'IP2', value: 'ip2', description: 'In progress 2' },
-            ],
-            'DONE': [
-                { title: 'D1', value: 'd1', description: 'Done 1' },
-                { title: 'D2', value: 'd2', description: 'Done 2' },
-                { title: 'D3', value: 'd3', description: 'Done 3' },
-                { title: 'D4', value: 'd4', description: 'Done 4' },
-            ],
-            'DEPLOYED': [
-                { title: 'DP1', value: 'dp1', description: 'Deployed 1' },
-                { title: 'DP2', value: 'dp2', description: 'Deployed 2' },
-            ]
-        },
+        status: ["TO DO", "IN PROGRESS", "QA TESTING", "DONE", "BACKLOG", "DEPLOYED"],
+        rowData: {},
         activeItem: null,
         selectedTab: null,
         selectedItem: null
@@ -35,25 +18,33 @@ const MainContent = () => {
     const [state, setState] = useState(initialState)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    const handleProceed = (type) => {
-        const { selectedTab, selectedItem } = state;
+    console.log({ data, state })
 
-        const updatedSourceList = state.data[selectedTab].filter(
-            item => item.value !== selectedItem.value
-        );
+    useEffect(() => {
+        if (data && data.data && Object.keys(data.data).length > 0) {
+            setState(prev => ({
+                ...prev,
+                rowData: data.data || {}
+            }));
+        } else {
+            console.log('error')
+        }
+    }, [data])
 
-        const updatedTargetList = [...state.data[type], selectedItem];
+    const handleProceed = async (type, id) => {
+        console.log('type', type)
 
-        const tempData = {
-            ...state.data,
-            [selectedTab]: updatedSourceList,
-            [type]: updatedTargetList
-        };
+        try {
+            const response = await moveTask({ id, status: type }).unwrap();
+            console.log('Task moved:', response);
+        } catch (err) {
+            console.error('Failed to move task:', err);
+        }
 
-        handleClose(tempData);
+        handleClose()
     };
 
-    const handleClose = (newData) => {
+    const handleClose = () => {
         setIsDialogOpen(false)
 
         setTimeout(() => {
@@ -62,38 +53,41 @@ const MainContent = () => {
                 activeItem: null,
                 selectedTab: null,
                 selectedItem: null,
-                data: newData || prev.data
             }))
         }, 500)
     }
 
-    const handleMenuOpen = (event, tab, item) => {
+    const handleMenuOpen = (event, item) => {
+        console.log('selected:',event.currentTarget, {item})
         setState(prev => ({
             ...prev,
-            activeItem: event.currentTarget,
-            selectedTab: tab,
+            activeItem: event.currentTarget,  
+            selectedTab: item.status,
             selectedItem: item
-        }))
-        setIsDialogOpen(true)
-    }
+        }));
+        setIsDialogOpen(true);
+    };
+
+
+    // console.log({state, data})
 
     return (
         <div style={{ padding: '25px' }}>
             <div className='trello-wrapper'>
-                {Object.entries(state.data).map(item => {
+                {state.status.map((item) => {
                     return (
                         <div className='trello-column' key={item}>
-                            <div className='trello-tab'>{item[0]}</div>
-                            {item[1].map(subItem => {
+                            <div className='trello-tab'>{item}</div>
+                            {state.rowData[item]?.map((task, index) => {
                                 return (
                                     <div className='trello-item' >
                                         <div className='trello-item-head'>
-                                            <div className='item-label' >{subItem.title}</div>
-                                            <IconButton onClick={(e) => handleMenuOpen(e, item[0], subItem)}>
+                                            <div className='item-label' >{task.title}</div>
+                                            <IconButton onClick={(e) => handleMenuOpen(e, task)}>
                                                 <MoreHorizIcon />
                                             </IconButton>
                                         </div>
-                                        <div className='item-decription'>{subItem.description}</div>
+                                        <div className='item-decription'>{task.description}</div>
                                     </div>
                                 )
                             })}
@@ -107,13 +101,13 @@ const MainContent = () => {
             <Menu
                 anchorEl={state.activeItem}
                 open={isDialogOpen}
-                onClose={(() => handleClose(''))}
+                onClose={(() => handleClose())}
             >
-                {Object.entries(state.data).map(([tab]) => {
-                    if (tab === state.selectedTab) return null;
+                {state.status.map((options, key) => {
+                    if (options === state.selectedTab) return null;
                     return (
-                        <MenuItem key={tab} onClick={() => { handleProceed(tab) }}>
-                            {tab}
+                        <MenuItem key={key} onClick={() => { handleProceed(options, state.selectedItem?._id) }}>
+                            {options}
                         </MenuItem>
                     )
                 }
