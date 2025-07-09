@@ -21,6 +21,7 @@ const userSlice = createSlice({
       state.status = 'idle';
       state.error = null;
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
     },
     setError: (state, action) => {
       state.error = action.payload;
